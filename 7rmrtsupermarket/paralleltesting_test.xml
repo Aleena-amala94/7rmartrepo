@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="paralleltestingtest" parallel="tests" thread-count="5">
+<parameter name="browser" value="chrome"></parameter>
+  <test name="chrometest">
+ 
+    <classes>
+   <class name="testScript.ManageFooterTextTest">
+    <methods><include name="verifyIfUserAbleToUpdateFooterDetails"></include>
+    </methods>
+   </class>
+     </classes>
+     </test> 
+    <test name="edgetest">
+  
+    <classes>
+   <class name="testScript.ManageFooterTextTest">
+  <methods><include name="verifyIfUserAbleToUpdateFooterDetails"></include>
+   </methods>
+   </class>
+    </classes>
+    </test>
+  
+  
+</suite> <!-- Suite -->
