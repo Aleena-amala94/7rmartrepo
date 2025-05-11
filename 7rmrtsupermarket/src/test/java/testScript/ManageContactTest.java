@@ -3,41 +3,40 @@ package testScript;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import pages.LogOutPage;
 import pages.LoginPage;
 import pages.ManageContactPage;
 import utility.ExcelUtility;
-import utility.FakerUtility;
+
 
 public class ManageContactTest extends Base {
-	@Test(groups={"regression"},description = "Verify the user is able to update contact")
+	public LogOutPage logoutpage;
+	public ManageContactPage managecontactpage;
+	@Test(groups={"regression"},description = "Verify the user is able to update contact details")
 	public void verifyIfUserAbleToUpdateContactDetails() throws Exception
 	{
 		String username = ExcelUtility.readStringData(1, 0, "loginpage");
 		String password = ExcelUtility.readStringData(1, 1, "loginpage");
-		
-		FakerUtility fakerutility = new FakerUtility();
-		String manageConatctPhone= fakerutility.generatePhone();
-		String manageContactEmail = fakerutility.generateEmail();
-		String managecontactAddress = fakerutility.generateAddress();
-		String manageContactDeliveryTime = "5 pm";
-		String manageContactDeliveryCharge = "50";
+		String manageConatctPhone=  ExcelUtility.readIntegerData(1, 0, "managecontact");
+		String manageContactEmail = ExcelUtility.readStringData(1, 1, "managecontact");
+		String managecontactAddress = ExcelUtility.readStringData(1, 2, "managecontact");
+		String manageContactDeliveryTime =ExcelUtility.readIntegerData(1, 3, "managecontact");
+		String manageContactDeliveryCharge =ExcelUtility.readIntegerData(1, 4,"managecontact") ;
 		
 		LoginPage loginpage = new LoginPage(driver);//parameterized construction need to create constructor in page class
-		loginpage.enterUserName(username);
-		loginpage.enterPassword(password);
-		loginpage.clickSignin();
+		loginpage.enterUserName(username).enterPassword(password);
 		
-		ManageContactPage managecontactpage=new ManageContactPage(driver);
-		managecontactpage.clickManageContactMoreInfo();
-		managecontactpage.clickManageContactAction();
-		managecontactpage.enterManageContactPhone(manageConatctPhone);;
-		managecontactpage.enterManageConatctEmail(manageContactEmail);
-		managecontactpage.enterManageConatctAddress( managecontactAddress);
-		managecontactpage.enterManageContactDeliveryTime(manageContactDeliveryTime);
-		managecontactpage.enterManageContactDeliveryCharge(manageContactDeliveryCharge);
-		managecontactpage.clickManageContactUpdate();
+		logoutpage=loginpage.clickSignin();
+		
+		//ManageContactPage managecontactpage=new ManageContactPage(driver);
+		managecontactpage=logoutpage.ManageContactMoreInfo();
+		managecontactpage.clickManageContactAction().enterManageContactPhone(manageConatctPhone).enterManageConatctEmail(manageContactEmail).enterManageConatctAddress(managecontactAddress).enterManageContactDeliveryTime(manageContactDeliveryTime).enterManageContactDeliveryCharge(manageContactDeliveryCharge).clickManageContactUpdate();
 		boolean isgreenalertdisplayed=managecontactpage.isManageContactAlertDisplayed();
 		Assert.assertTrue(isgreenalertdisplayed);
+		
+
+		
+		
 		
 		
 	}

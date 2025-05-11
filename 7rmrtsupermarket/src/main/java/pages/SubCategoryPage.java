@@ -2,7 +2,6 @@ package pages;
 
 import java.time.Duration;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,90 +15,103 @@ import utility.PageUtility;
 
 public class SubCategoryPage {
 	WebDriver driver;
-	@FindBy(xpath="//a[contains(@href,'https://groceryapp.uniqassosiates.com/admin/list-sub-category')]")WebElement moreinfo;
-	@FindBy(xpath="//a[@class='btn btn-rounded btn-danger']")WebElement editnew;
-	@FindBy(xpath="//select[@id='cat_id']")WebElement category;
-	@FindBy(xpath="//input[@id='subcategory']")WebElement subcategory;
-	@FindBy(xpath="//input[@name='main_img']")WebElement choosefile;
-	@FindBy(xpath="//button[@class='btn btn-danger']")WebElement save;
-	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")WebElement alert;
-	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/Subcategory/edit?edit=3526&page_ad=1']")WebElement action;
-	@FindBy(xpath="//select[@id='cat_id']")WebElement updatecategory;
-	@FindBy(xpath="//input[@id='subcategory']")WebElement updatesubcategory;
-	@FindBy(xpath="//input[@id='main_img']")WebElement updatechoosefile;
-	@FindBy(xpath="//button[@class='btn btn-danger']")WebElement update;
-	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")WebElement updatealert;
-	public SubCategoryPage(WebDriver driver)
-	{
-		this.driver=driver;
+
+	@FindBy(xpath = "//a[@class='btn btn-rounded btn-danger']")
+	WebElement editnew;
+	@FindBy(xpath = "//select[@id='cat_id']")
+	WebElement category;
+	@FindBy(xpath = "//input[@id='subcategory']")
+	WebElement subcategory;
+	@FindBy(xpath = "//input[@name='main_img']")
+	WebElement choosefile;
+	@FindBy(xpath = "//button[@class='btn btn-danger']")
+	WebElement save;
+	@FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
+	WebElement alert;
+	@FindBy(xpath = "//a[@href='https://groceryapp.uniqassosiates.com/admin/Subcategory/edit?edit=3526&page_ad=1']")
+	WebElement action;
+	@FindBy(xpath = "//select[@id='cat_id']")
+	WebElement updatecategory;
+	@FindBy(xpath = "//input[@id='subcategory']")
+	WebElement updatesubcategory;
+	@FindBy(xpath = "//input[@id='main_img']")
+	WebElement updatechoosefile;
+	@FindBy(xpath = "//button[@class='btn btn-danger']")
+	WebElement update;
+	@FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
+	WebElement updatealert;
+
+	public SubCategoryPage(WebDriver driver) {
+		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	public void clickMoreInfo()
-	{
-		moreinfo.click();
-	}
-	public void clickNew()
-	{
+
+	public SubCategoryPage clickNew() {
 		editnew.click();
+		return this;
 	}
-	public void addCategory()
-	{
+
+	public SubCategoryPage addCategory() {
 		PageUtility pageutility = new PageUtility();
 		pageutility.selectByIndex(category, 5);
-		
-		
+		return this;
+
 	}
-	public void enterSubCategory(String vegtext)
-	{
+
+	public SubCategoryPage enterSubCategory(String vegtext) {
 		subcategory.sendKeys(vegtext);
+		return this;
 	}
-	public void uploadImage()
-	{
+
+	public SubCategoryPage uploadImage() {
 		FileUploadUtility fileuploadutility = new FileUploadUtility();
 		fileuploadutility.fileUploadUsingSendKeys(choosefile, Constants.IMAGEUPLOAD);
+		return this;
 	}
-	public void clickSave()
-	{
-		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+
+	public SubCategoryPage clickSave() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		wait.until(ExpectedConditions.elementToBeClickable(save));
 		save.click();
+		return this;
 	}
-	public boolean isAlertDisplyed()
-	{
+
+	public boolean isAlertDisplyed() {
 		return alert.isDisplayed();
 	}
-	public void clickAction()
-	{
-		//action.click();
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", action);
+
+	public SubCategoryPage clickAction() {
+		PageUtility pu = new PageUtility();
+		pu.javaClickMethod(action, driver);
+		return this;
 	}
-	public void updatecategory()
-	{
+
+	public SubCategoryPage updatecategory() {
 		PageUtility pageutility = new PageUtility();
 		pageutility.selectByIndex(updatecategory, 5);
-		
+		return this;
+
 	}
-	public void updateSubCategory(String updatetext)
-	{
+
+	public SubCategoryPage updateSubCategory(String updatetext) {
 		updatesubcategory.clear();
 		updatesubcategory.sendKeys(updatetext);
+		return this;
 	}
-	public void updateImage()
-	{
+
+	public SubCategoryPage updateImage() {
 		FileUploadUtility fileuploadutility = new FileUploadUtility();
 		fileuploadutility.fileUploadUsingSendKeys(updatechoosefile, Constants.IMAGEUPLOAD);
+		return this;
 	}
-	public void updateSave()
-	{
-		//update.click();
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();",update );
+
+	public SubCategoryPage updateSave() {
+		PageUtility pu = new PageUtility();
+		pu.javaClickMethod(save, driver);
+		return this;
 	}
-	public boolean isUpdateAlertDisplyed()
-	{
+
+	public boolean isUpdateAlertDisplyed() {
 		return updatealert.isDisplayed();
 	}
 }
-
-

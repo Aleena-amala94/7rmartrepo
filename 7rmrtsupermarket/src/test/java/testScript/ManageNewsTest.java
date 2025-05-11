@@ -6,13 +6,16 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import pages.LogOutPage;
 import pages.LoginPage;
 import pages.ManageNewsPage;
 import utility.ExcelUtility;
 
 public class ManageNewsTest extends Base{
+	public LogOutPage logoutpage;
+	public ManageNewsPage managenews;
 	
-	@Test
+	@Test(description="verify that user is able to save news")
 	public void verifyThatUserIsAbleToSaveNews() throws Exception
 	{
 		//String username="admin";
@@ -22,15 +25,14 @@ public class ManageNewsTest extends Base{
 		String password=ExcelUtility.readStringData(1, 1,"loginpage");
 		String text=ExcelUtility.readStringData(1, 0,"managenewspage");
 		LoginPage loginpage=new LoginPage(driver);
-		loginpage.enterUserName(username);
-		loginpage.enterPassword(password);
-		loginpage.clickSignin();
-		ManageNewsPage managenewspage=new ManageNewsPage(driver);
-		managenewspage.manageNewsMoreInfo();
-		managenewspage.clickNew();
-		managenewspage.manageText(text);
-		managenewspage.manageSubmit();
-		boolean alertdisplayed=managenewspage.isGreenAlertDispalyed();
+		loginpage.enterUserName(username).enterPassword(password);
+		
+		logoutpage=loginpage.clickSignin();
+		//ManageNewsPage managenewspage=new ManageNewsPage(driver);
+		managenews=logoutpage.manageNewsMoreInfo();
+		managenews.clickNew().manageText(text).manageSubmit();
+		
+		boolean alertdisplayed=managenews.isGreenAlertDispalyed();
 		Assert.assertTrue(alertdisplayed);
 		
 	}
